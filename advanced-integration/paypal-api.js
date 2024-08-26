@@ -8,7 +8,7 @@ const base = `${BASE_URL}`
 
 // call the create order method
 export async function createOrder() {
-  const purchaseAmount = "0.10"; // TODO: pull prices from a database
+  const purchaseAmount = "1"; // TODO: pull prices from a database
   const accessToken = await generateAccessToken();
   const url = `${base}/v2/checkout/orders`;
   const response = await fetch(url, {
@@ -21,14 +21,38 @@ export async function createOrder() {
       intent: "CAPTURE",
       purchase_units: [
         {
+          reference_id: "reference-id-001",
+          custom_id: "custom-id-001",
+          invoice_id:"invoice-sale-002",
           amount: {
             currency_code: "USD",
             value: purchaseAmount,
+            breakdown: {
+              item_total: {
+                   currency_code: "USD",
+                   value: "1.00"
+               },
+            }
           },
-          payee: {
-            merchant_id: PAYPAL_MERCHANT_ID,
-          }
-        },
+          items: [
+            {
+              name: "test1",
+              quantity: "1",
+              unit_amount: {
+                currency_code: "USD",
+                value: "0.5"
+              },
+            },
+            {
+              name: "test2",
+              quantity: "1",
+              unit_amount: {
+                currency_code: "USD",
+                value: "0.5"
+              },
+            },
+          ]
+        }
       ],
       payment_source: {
         google_pay:{

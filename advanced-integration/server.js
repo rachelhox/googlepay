@@ -12,9 +12,9 @@ app.get("/", async (req, res) => {
   const clientId = process.env.PAYPAL_CLIENT_ID, merchantId = process.env.PAYPAL_MERCHANT_ID;
   const clientSecret = process.env.PAYPAL_CLIENT_SECRET;
   try {
-    if (!clientId || !merchantId ||  !clientSecret){
-      throw new Error("Client Id or App Secret or Merchant Id is missing.");
-    }
+    // if (!clientId || !merchantId ||  !clientSecret){
+    //   throw new Error("Client Id or App Secret or Merchant Id is missing.");
+    // }
     const clientToken = await paypal.generateClientToken();
     res.render("checkout", { clientId, clientToken, merchantId });
   } catch (err) {
